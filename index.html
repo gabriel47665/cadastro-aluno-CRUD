@@ -1,0 +1,211 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Alunos</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-GLhlTQ8iRABdZLl6O3oVMWSktQOp6b7In1Zl3/Jr59b6EGGoI1aFkw7cmDA6j6gD"
+      crossorigin="anonymous"
+    />
+  </head>
+  <body>
+    <div class="container mt-5">
+      <div class="row">
+        <div class="col-12">
+          <h2 class="mb-3 d-flex justify-content-between">
+            Lista de Alunos
+            <button
+              class="btn btn-primary"
+              type="button"
+              data-bs-toggle="offcanvas"
+              data-bs-target="#offcanvasRight"
+              aria-controls="offcanvasRight"
+            >
+              Novo aluno
+            </button>
+          </h2>
+          <table class="table">
+            <thead class="table-dark">
+              <tr>
+                <th scope="col">Nome</th>
+                <th scope="col">Email</th>
+                <th scope="col">Telefone</th>
+                <th scope="col">Cidade</th>
+                <th scope="col">Ações</th>
+              </tr>
+            </thead>
+            <tbody id="tabela"></tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <div
+      class="offcanvas offcanvas-end"
+      tabindex="-1"
+      id="offcanvasRight"
+      aria-labelledby="offcanvasRightLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Cadastrar</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <form id="cadastro" onsubmit="adicionarAluno()">
+          <label for="nome" class="form-label">Nome</label>
+          <input
+            type="text"
+            class="form-control"
+            id="nome"
+            placeholder="Digite o nome"
+            required
+          />
+          <label for="email" class="form-label mt-2">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="email"
+            placeholder="Digite o email"
+            required
+          />
+          <label for="telefone" class="form-label mt-2">Telefone</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="telefone"
+            placeholder="(00) 00000-0000"
+            required
+          />
+          <label for="cidade" class="form-label mt-2">Cidade</label>
+          <input
+            type="text"
+            class="form-control"
+            id="cidade"
+            placeholder="Digite a cidade"
+            required
+          />
+          <button class="btn btn-primary mt-3 w-100" type="submit">
+            Enviar
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div
+      class="offcanvas offcanvas-end"
+      tabindex="-1"
+      id="offcanvasRightEditar"
+      aria-labelledby="offcanvasRightLabel"
+    >
+      <div class="offcanvas-header">
+        <h5 class="offcanvas-title" id="offcanvasRightLabel">Editar</h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="offcanvas"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="offcanvas-body">
+        <form id="editar" onsubmit="editarAluno()">
+          <input type="hidden" id="e_id">
+          <label for="e_nome" class="form-label">Nome</label>
+          <input
+            type="text"
+            class="form-control"
+            id="e_nome"
+            placeholder="Digite o nome"
+            required
+          />
+          <label for="e_email" class="form-label mt-2">Email</label>
+          <input
+            type="email"
+            class="form-control"
+            id="e_email"
+            placeholder="Digite o email"
+            required
+          />
+          <label for="e_telefone" class="form-label mt-2">Telefone</label>
+          <input
+            type="tel"
+            class="form-control"
+            id="e_telefone"
+            placeholder="(00) 00000-0000"
+            required
+          />
+          <label for="e_cidade" class="form-label mt-2">Cidade</label>
+          <input
+            type="text"
+            class="form-control"
+            id="e_cidade"
+            placeholder="Digite a cidade"
+            required
+          />
+          <button class="btn btn-primary mt-3 w-100" type="submit">
+            Enviar
+          </button>
+        </form>
+      </div>
+    </div>
+
+    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Deseja apagar este item?</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-footer">
+        <button 
+          id="confirmar"
+          type="button" 
+          class="btn btn-success" 
+          data-bs-dismiss="modal"
+          onclick="deletarAluno()">Sim</button>
+        <button 
+          type="button" 
+          class="btn btn-danger"
+          data-bs-dismiss="modal">Não</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="toast-container position-fixed bottom-0 end-0 p-3">
+  <div id="alerta" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+    <div class="toast-header">
+      <strong class="me-auto">Aviso:</strong>
+      <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+    </div>
+    <div class="toast-body"></div>
+  </div>
+</div>
+
+    <!-- JS BOOTSTRAP -->
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN"
+      crossorigin="anonymous"
+    ></script>
+    <!-- JS JQUERY -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.6.3/jquery.min.js"></script>
+
+    <!-- JS MASK -->
+    <script src="jquery.mask.js"></script>
+
+    <!-- JS PESSOAL -->
+    <script src="scripts.js"></script>
+    <script>
+      $("#telefone, #e_telefone").mask("(00) 00000-0000");
+    </script>
+  </body>
+</html>
